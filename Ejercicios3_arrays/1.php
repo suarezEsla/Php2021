@@ -46,7 +46,8 @@ maximo($aleatorios);
 echo '<h3>Mínimo: </h3><br>';
 minimo($aleatorios);
 
-
+echo '<hr>';
+ show_source(__FILE__); 
 ?>
 
 
