@@ -1,0 +1,27 @@
+.container {
+    text-align: center;
+    width: 60%;
+    height: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.5%;
+    border: 3px solid rgb(53, 185, 168);
+    text-align: center;
+    background-color: whitesmoke;
+}
+
+.formulario {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.formulario input {
+    width: 90%;
+    height: 30px;
+    margin: 0.5rem;
+}
