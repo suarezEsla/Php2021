@@ -48,6 +48,7 @@ function volcarDatostxt($tvalores){
 // FICHERO DE CSV
 //Trabaja con el fichero CSV
 function cargarDatoscsv (){
+    $tabla=[]; 
     $archivoCsv = fopen( FILEUSER, "rb" );
     if (!is_readable(FILEUSER) ){
         // El directorio donde se crea tiene que tener permisos adecuados
@@ -59,10 +60,6 @@ function cargarDatoscsv (){
 
 
    while ($linea = fgetcsv($fich)) {
-
-
-    //PREGUNTAR A ALBERTO
-        /* $partes = explode(',', trim($linea)); */
         // Escribimos la correspondiente fila en tabla
         $tabla[]= [ $linea[0],$linea[1],$linea[2],$linea[3]];
         }
@@ -84,15 +81,28 @@ function volcarDatoscsv($tvalores){
 
 // ----------------------------------------------------
 // FICHERO DE JSON
+/*
 function cargarDatosjson (){
-  
+    //Cargar contenido json en una variable fich
+    $fich = @file_get_contents(FILEUSER);
+    //Descodificar JSON
+    $usuarios = json_decode($fich, true);
+    /* foreach ($items as $item) {
+        echo '<pre>';
+        print_r($item);
+        echo '</pre>';
+    } 
 }
+/* function volcarDatosjson($tvalores){
+    $fich = @fopen(FILEUSER,"w") or die ("Error al escribir en el fichero.");
 
-function volcarDatosjson($tvalores){
-    
+    foreach ($tvalores as $usuarios) {
+        file_put_contents($tvalores, json_encode($fich));
+    }
+    fclose($fich);
    
     
-}
+} */
 
 
 
