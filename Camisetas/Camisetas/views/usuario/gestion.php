@@ -45,6 +45,7 @@
 
 			<!--LLama a la funcion edit de UsuarioController/editar()-->
 				<a href="<?=base_url?>usuario/editar&id=<?=$usuario->id?>" class="button button-gestion">Editar</a>
+				<a href="<?=base_url?>usuario/verMasUsuario&id=<?=$usuario->id?>" class="button button-mas">Ver más</a>
 				<a href="<?=base_url?>usuario/eliminar&id=<?=$usuario->id?>" class="button button-gestion button-red">Eliminar</a>
 			</td>
 		</tr>

@@ -1,5 +1,6 @@
 <?php
 require_once 'models/Pedido.php';
+require_once 'models/Usuario.php';
 
 class pedidoController{
 	
@@ -85,11 +86,17 @@ class pedidoController{
 			$pedido = new Pedido();
 			$pedido->setId($id);
 			$pedido = $pedido->getOne();
-			
+
+			//Sacar los datos de los usuarios
+			$usuario = new Usuario();
+			$usuario->setId($pedido->usuario_id);
+			$usuario = $usuario->getOne(); 
+
 			// Sacar los poductos
 			$pedido_productos = new Pedido();
 			$productos = $pedido_productos->getProductosByPedido($id);
 			
+
 			require_once 'views/pedido/detalle.php';
 		}else{
 			header('Location:'.base_url.'pedido/mis_pedidos');
@@ -124,6 +131,33 @@ class pedidoController{
 			header("Location:".base_url);
 		}
 	}
-	
+
+
+
+
+	//Crear PDF
+	public function crearPdf(){
+		Utils::isAdmin();
+		if(isset($_GET['pedido_id'])){
+			$id = $_GET['pedido_id'];
+		
+			
+			$pedido = new Pedido();
+
+			$pedido->setId($id);
+			
+			$pedido = $pedido->getOne();
+
+			require_once './models/factura.php';
+			
+			/* require_once '../views/pedido/factura.php'; */
+			
+			
+		}else{
+			
+			header('Location:'.base_url.'Pedido/gestion');
+		}
+	}
+	// import dompdf class into global namespace
 	
 }

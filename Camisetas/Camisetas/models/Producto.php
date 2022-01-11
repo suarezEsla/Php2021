@@ -95,8 +95,21 @@ class Producto{
 	
 	public function getAll(){
 		$productos = $this->db->query("SELECT * FROM productos ORDER BY id DESC");
+
+		/* if($this->getOferta() ){
+			$productos .= "WHERE oferta = 'si'";
+		} */
 		return $productos;
 	}
+
+
+	
+//Esla
+	public function sacarOferta(){
+		$ofertas = $this->db->query("SELECT * FROM productos WHERE oferta = 'si'");
+		return $ofertas;
+	}
+
 	
 	public function getAllCategory(){
 		$sql = "SELECT p.*, c.nombre AS 'catnombre' FROM productos p "
@@ -107,6 +120,11 @@ class Producto{
 		return $productos;
 	}
 	
+
+
+
+
+
 	public function getRandom($limit){
 		$productos = $this->db->query("SELECT * FROM productos ORDER BY RAND() LIMIT $limit");
 		return $productos;

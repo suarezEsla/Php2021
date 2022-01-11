@@ -81,21 +81,26 @@ class Usuario{
 		return $result;
 	}
 
-	//Guardar usuario para Admin (Esla)
-	/*  public function saveAdmin(){
-		Utils::isAdmin();
 
-		$sql = "INSERT INTO usuarios VALUES(NULL, '{$this->getNombre()}', '{$this->getApellidos()}', '{$this->getEmail()}', 'user',null );";
-		$save = $this->db->query($sql);
-		
+	public function verPedidos(){
+			$email = $this->email;
 		$result = false;
-		if($save){
-			$result = true;
+		// Comprobar si existe el usuario
+		$sql = "SELECT * FROM pedidos where email = '$email' ORDER BY id DESC";
+		$pedidos = $this->db->query($sql);
+		
+		
+		if($pedidos && $pedidos->num_rows == 1){
+			$usuario = $pedidos->fetch_object();
+				$result = $usuario;	
 		}
+		
 		return $result;
 		
-	}  */
+	}
 	
+
+
 	
 	public function login(){
 		$result = false;
@@ -124,9 +129,11 @@ class Usuario{
 
 	//Esla
 	public function edit(){
-	$sql = "UPDATE usuarios SET nombre='{$this->getNombre()}', apellidos='{$this->getApellidos()}', email={$this->getEmail()}, password={$this->getPassword()}, roll='user', imagen=NULL"; 
-		
-		$sql .= " WHERE id={$this->id};";
+	$sql = "UPDATE usuarios SET nombre='{$this->getNombre()}', apellidos='{$this->getApellidos()}', email='{$this->getEmail()}' , password='{$this->getPassword()}', rol='user', imagen=NULL WHERE id='{$this->id}'"; 
+		/* var_dump($sql);
+		die;
+		 */
+		/* $sql .= " WHERE id='{$this->id}';"; */
 		
 		$save = $this->db->query($sql);
 		
