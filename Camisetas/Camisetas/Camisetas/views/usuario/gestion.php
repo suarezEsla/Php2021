@@ -42,6 +42,8 @@
 			<td><?=$usuario->apellidos;?></td>
 			<td><?=$usuario->email;?></td>
 			<td>
+				
+
 
 			<!--LLama a la funcion edit de UsuarioController/editar()-->
 				<a href="<?=base_url?>usuario/editar&id=<?=$usuario->id?>" class="button button-gestion">Editar</a>
@@ -49,6 +51,7 @@
 			</td>
 		</tr>
 	<?php endwhile; ?>
+	
 </table> 
 
 

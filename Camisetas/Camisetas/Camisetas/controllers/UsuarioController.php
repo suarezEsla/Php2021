@@ -137,7 +137,14 @@ class usuarioController{
 	}
 	
 
-
+public function sacarInfo(){
+	Utils::isAdmin();
+		$gestion = true;
+		
+		$pedido = new Pedido();
+		$pedidos = $pedido->getAll();
+		require_once 'views/usuario/verMas.php';
+}
 
 
 

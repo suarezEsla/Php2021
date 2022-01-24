@@ -1,23 +1,48 @@
-<?php if (isset($usuario)) : ?>
-    <table>
-        <h1>Más datos sobre el usuario <?= $usuario->id ?></h1>
-        <tr>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>e-mail</th>
-        </tr>
-        <tr>
-            <div class="data">
+<h1>Detalle del pedido</h1>
 
-                <td class="descripcion"><?= $usuario->nombre ?></td>
-                <td class="description"><?= $usuario->apellidos ?></td>
-                <td class="price"><?= $usuario->email ?></td>
+<?php if (isset($pedido)): ?>
+		<?php if(isset($_SESSION['admin'])): ?>
+			
+		
 
-            </div>
-            </div>
-        </tr>
-    </table>
-    <a href="<?=base_url?>usuario/verPedidos&id=<?=$usuario->id?>" class="button button-mas">Ver pedidos</a>
-<?php else : ?>
-    <h1>El usuario no existe</h1>
+		<h3>Dirección de envio</h3>
+		Provincia: <?= $pedido->provincia ?>   <br/>
+		Cuidad: <?= $pedido->localidad ?> <br/>
+		Direccion: <?= $pedido->direccion ?>   <br/><br/>
+
+		<h3>Datos del pedido:</h3>
+		Estado: <?=Utils::showStatus($pedido->estado)?> <br/>
+		Número de pedido: <?= $pedido->id ?>   <br/>
+		Total a pagar: <?= $pedido->coste ?> $ <br/>
+		Productos:
 <?php endif; ?>
+		<table>
+			<tr>
+				<th>Imagen</th>
+				<th>Nombre</th>
+				<th>Precio</th>
+				<th>Unidades</th>
+			</tr>
+			<?php while ($producto = $productos->fetch_object()): ?>
+				<tr>
+					<td>
+						<?php if ($producto->imagen != null): ?>
+							<img src="<?= base_url ?>uploads/images/<?= $producto->imagen ?>" class="img_carrito" />
+						<?php else: ?>
+							<img src="<?= base_url ?>assets/img/camiseta.png" class="img_carrito" />
+						<?php endif; ?>
+					</td>
+					<td>
+						<a href="<?= base_url ?>producto/ver&id=<?= $producto->id ?>"><?= $producto->nombre ?></a>
+					</td>
+					<td>
+						<?= $producto->precio ?>
+					</td>
+					<td>
+						<?= $producto->unidades ?>
+					</td>
+				</tr>
+			<?php endwhile; ?>
+		</table>
+
+	<?php endif; ?>

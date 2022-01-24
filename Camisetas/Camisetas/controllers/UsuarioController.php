@@ -1,5 +1,6 @@
 <?php
 require_once 'models/Usuario.php';
+require_once 'models/Pedido.php';
 
 class usuarioController
 {
@@ -97,7 +98,7 @@ class usuarioController
 
 
 //Ver más acerca de un usuario (nº de pedidos, etc...)
-public function verMasUsuario(){
+/* public function verMasUsuario(){
 	Utils::isAdmin();
 	if (isset($_GET['id'])) {
 		$id = $_GET['id'];
@@ -108,18 +109,12 @@ public function verMasUsuario(){
 
 		$usuario = $usuario->getOne();
 
+
 		 require_once "views/usuario/verMas.php"; 
 	} else {
 		header('Location:' . base_url . 'Usuario/gestion');
 	}
-}
-
-
-
-
-
-
-
+} */
 
 
 
@@ -209,6 +204,20 @@ public function verMasUsuario(){
 		header("Location:" . base_url);
 	}
 
+public function gestionPedidos (){
+	Utils::isAdmin();
+
+	if (isset($_GET['id'])) {
+		$id = $_GET['id'];
+	$usuario = new Usuario();
+	$usuarios = $usuario->getId($id);
+	$delete = $usuario->verPedidos();
+	}
+		/* $pedido = new Pedido();
+		$pedidos = $pedido->getId($id); */
+
+		require_once 'views/usuario/verMas.php';
+	}
 
 
 

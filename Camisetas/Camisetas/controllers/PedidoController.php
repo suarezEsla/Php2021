@@ -109,7 +109,7 @@ class pedidoController{
 		
 		$pedido = new Pedido();
 		$pedidos = $pedido->getAll();
-		
+		//Obtiene todos los pedidos y redirige a mis_pedidos (vista)
 		require_once 'views/pedido/mis_pedidos.php';
 	}
 	
