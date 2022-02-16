@@ -144,6 +144,44 @@ class Usuario{
 		return $result;
 	}
 
+
+
+
+	public function obtenerUnUsuario(int $userId):Usuario{
+
+		$user = $this->db->query("SELECT * FROM usuarios WHERE id = $userId");
+
+		$user = $user->fetch_object("Usuario");
+		if ($user == null){
+			header("Location:".base_url);
+			die();
+		}
+		return $user;
+
+	}
+
+
+
+
+	public static function usuarioSinPedidos(){
+		$user = $this->db->query("SELECT DISTINCT usuario_id FROM pedidos");
+		
+		return $user;
+	}
+
+	public function getAllUsers(){
+
+		$usersArray = [];
+		$users      = $this->db->query("SELECT * FROM usuarios ORDER BY rol, id DESC");
+		while($row = $users->fetch_object("Usuario"))$usersArray[] = $row;
+
+
+		return $usersArray;
+	}
+
+
+
+
 	public function delete(){
 		$sql = "DELETE FROM usuarios WHERE id={$this->id}";
 		$delete = $this->db->query($sql);
@@ -163,8 +201,47 @@ class Usuario{
 	
 	//Esla
 	public function getOne(){
-		$usuario = $this->db->query("SELECT * FROM usuarios WHERE id = {$this->getId()}");
+		$user = $this->db->query("SELECT * FROM usuarios WHERE id = {$this->getId()}");
+		return $user->fetch_object();
+	}
+
+
+	public function getMisDatos(){
+		$sql = "SELECT * FROM usuarios "
+				. "WHERE id = {$this->getId()} ORDER BY id DESC";
+			
+		$usuario = $this->db->query($sql);
+			
 		return $usuario->fetch_object();
 	}
+
+
+
+//Función para obtener todos los usuarios en un array
+	public function todosUsuarios(){
+
+		$arrayUsuarios = [];
+		$usuarios = $this->db->query("SELECT * FROM usuarios order by id DESC");
+		while($fila = $usuarios->fetch_object("Usuario"))$arrayUsuarios[] = $fila;
+
+
+		return $arrayUsuarios;
+	}
 	
+
+//Función para obtener un único usuario por id
+	public function unUsuario(int $userId):Usuario{
+
+		$usuario = $this->db->query("SELECT * FROM usuarios WHERE id = $userId");
+
+		$usuario = $usuario->fetch_object("Usuario");
+
+		if ($usuario == null){
+
+			header("Location:".base_url);
+			
+		}
+		return $usuario;
+
+	}
 }

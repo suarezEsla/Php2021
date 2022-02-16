@@ -1,12 +1,12 @@
 <?php
 
 class Producto{
-	private $id;
+	public $id;
 	private $categoria_id;
-	private $nombre;
+	public $nombre;
 	private $descripcion;
-	private $precio;
-	private $stock;
+	public $precio;
+	public $stock;
 	private $oferta;
 	private $fecha;
 	private $imagen;
@@ -89,6 +89,11 @@ class Producto{
 		$this->imagen = $imagen;
 	}
 
+//Función para obtener las ofertas de la bd
+public function obtenerOfertas(){
+	$categorias = $this->db->query("SELECT * FROM productos WHERE oferta='si' ORDER BY precio " );
+		return $categorias;
+}
 
 
 
@@ -103,12 +108,35 @@ class Producto{
 	}
 
 
-	
-//Esla
-	public function sacarOferta(){
-		$ofertas = $this->db->query("SELECT * FROM productos WHERE oferta = 'si'");
-		return $ofertas;
+
+	//Función para obtener el total de productos vendidos
+	public function obtenerTotalProductosVendidos(){
+		$idProducto = $this->id;
+		$totaLVentas = $this->db->prepare("SELECT sum(unidades) as 'total' FROM lineas_pedidos WHERE producto_id =?");
+		
+
+		$totaLVentas->bind_param("i",$idProducto);
+		$totaLVentas->execute();
+
+		$total = $totaLVentas->get_result()->fetch_array()[0];
+
+		
+		return $total;
+		
 	}
+
+//Función para sacar el producto más vendido
+	public function obtenerMasVendido(){
+		
+		$masVendido = "SELECT max(l.producto_id), p.nombre FROM lineas_pedidos l join productos p where l.producto_id=p.id";
+		
+		
+
+		$productos = $this->db->query($masVendido);
+		return $productos;
+	}
+ 
+
 
 	
 	public function getAllCategory(){
@@ -176,4 +204,25 @@ class Producto{
 		return $result;
 	}
 	
+
+
+	public function conseguirProductos( $busqueda = null){
+		$sql="SELECT p.nombre AS 'producto' FROM productos p ";
+			 
+		$producto = $this->db->query($sql);
+	
+		if($producto && $producto->num_rows == 1){
+			$resultado = $producto->fetch_object();
+				$result = $resultado;	
+		}
+
+
+		if(!empty($busqueda)){
+			$sql .= "WHERE p.nombre LIKE '%$busqueda%' ";
+		}
+		
+		$sql .= "ORDER BY e.id DESC ";
+	
+		return $result;
+	}
 }

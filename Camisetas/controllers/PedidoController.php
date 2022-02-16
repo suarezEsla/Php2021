@@ -1,6 +1,8 @@
 <?php
 require_once 'models/Pedido.php';
 require_once 'models/Usuario.php';
+include_once 'vendor/autoload.php';
+use Dompdf\Dompdf;
 
 class pedidoController{
 	
@@ -76,6 +78,9 @@ class pedidoController{
 		require_once 'views/pedido/mis_pedidos.php';
 	}
 	
+
+
+	//Se llama desde mis_pedidos.php con el id del usuario
 	public function detalle(){
 		Utils::isIdentity();
 		
@@ -137,7 +142,7 @@ class pedidoController{
 
 	//Crear PDF
 	public function crearPdf(){
-		Utils::isAdmin();
+		/* Utils::isAdmin();
 		if(isset($_GET['pedido_id'])){
 			$id = $_GET['pedido_id'];
 		
@@ -146,18 +151,36 @@ class pedidoController{
 
 			$pedido->setId($id);
 			
-			$pedido = $pedido->getOne();
+			$pedido = $pedido->getOne(); */
 
-			require_once './models/factura.php';
+
+$dompdf = new Dompdf();
+$dompdf->loadHtml('hola mundo');
+$dompdf->render();
+$contenido = $dompdf->output();
+/* $contenido = $dompdf->output(); */
+$nombreDelDocumento = "1_hola.pdf";
+$bytes = file_put_contents($nombreDelDocumento, $contenido);
+
+
+
+
+
+
+			/* require_once './models/factura.php'; */
+
+	
 			
 			/* require_once '../views/pedido/factura.php'; */
 			
-			
+		/* 	
 		}else{
 			
 			header('Location:'.base_url.'Pedido/gestion');
 		}
-	}
+	} */
 	// import dompdf class into global namespace
 	
+}
+
 }

@@ -121,7 +121,7 @@ class usuarioController
 	//Editar para admin
 	public function editar()
 	{
-		Utils::isAdmin();
+		/* Utils::isAdmin(); */
 		if (isset($_GET['id'])) {
 			$id = $_GET['id'];
 			$edit = true;
@@ -211,6 +211,7 @@ public function gestionPedidos (){
 		$id = $_GET['id'];
 	$usuario = new Usuario();
 	$usuarios = $usuario->getId($id);
+	//verPedidos en models/usuario
 	$delete = $usuario->verPedidos();
 	}
 		/* $pedido = new Pedido();
@@ -222,8 +223,38 @@ public function gestionPedidos (){
 
 
 
+	
+//Se llama desde sidebar a ésta función, pulsando el botón mis_datos
+public function detalleUsuario(){
+	Utils::isIdentity();
+	
+	if(isset($_GET['id'])){
+		$id = $_GET['id'];
+		
+		// Sacar el pedido
+		$usuario = new Pedido();
+		$usuario->setId($id);
+		$usuario = $usuario->getOne();
+		
 
-	public function gestion()
+		require_once 'views/usuario/detalle.php';
+	}else{
+		header('Location:'.base_url.'usuario/gestion');
+	}
+}
+
+
+//Esla
+function infoUsuario(){
+	$usuario = new Usuario();
+		$userId = $_GET["id"];
+		$usuario = $usuario->obtenerUnUsuario($userId);
+}
+
+
+
+
+public function gestion()
 	{
 		Utils::isAdmin();
 
@@ -232,6 +263,54 @@ public function gestionPedidos (){
 
 		require_once 'views/usuario/gestion.php';
 	}
+
+
+
+//Sacar los datos de un único usuario para gestionar los datos
+public function gestionUsuarioUnico(){
+	$usuario   = new Usuario();
+
+	if(isset($_SESSION['admin'])){
+		$usuarios = $usuario->todosUsuarios();
+	}
+	elseif(Utils::isIdentity()){
+		$usuarios[] = $usuario->unUsuario($_SESSION['identity']->id);
+	}
+	require_once 'views/usuario/mis_datos.php';
+}
+
+
+
+	public function gestionUsuario(){
+		Utils::isIdentity();
+		
+		if(isset($_GET['id'])){
+			$id = $_GET['id'];
+			
+			// Sacar el pedido
+			$pedido = new Pedido();
+			$pedido->setId($id);
+			$pedido = $pedido->getOne();
+
+			//Sacar los datos de los usuarios
+			$usuario = new Usuario();
+			$usuario->setId($pedido->usuario_id);
+			$usuario = $usuario->getOne(); 
+
+			// Sacar los poductos
+			$pedido_productos = new Pedido();
+			$productos = $pedido_productos->getProductosByPedido($id);
+			
+
+			require_once 'views/usuario/mis_datos.php';
+		}else{
+			/* header('Location:'.base_url.'pedido/mis_pedidos'); */
+		}
+	}
+
+
+
+
 
 	public function crear()
 	{

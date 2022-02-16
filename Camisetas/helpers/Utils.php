@@ -67,6 +67,19 @@ class Utils{
 		return $value;
 	}
 	
+/**Función para rebajar los productos */
+
+	public static function precioRebajado($dato){
+
+		return number_format(($dato+($dato/100)*20),2);
+	
+	}
+
+
+
+	
+	
+	
 
 	
 

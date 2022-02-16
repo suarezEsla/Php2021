@@ -6,7 +6,7 @@ class Pedido{
 	private $provincia;
 	private $localidad;
 	private $direccion;
-	private $coste;
+	public $coste;
 	private $estado;
 	private $fecha;
 	private $hora;
@@ -116,6 +116,16 @@ class Pedido{
 		$pedido = $this->db->query($sql);
 			
 		return $pedido;
+	}
+
+
+	public function costePedidosUsuario(){
+		$sql= "SELECT sum(coste),count(coste) FROM pedidos ".
+		"WHERE usuario_id = {$this->getUsuario_id()} ORDER BY usuario_id DESC";
+	/* var_dump($sql); die(); */
+		$costeTotal=$this->db->query($sql);
+		 
+		return $costeTotal;
 	}
 	
 	

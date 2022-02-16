@@ -23,7 +23,6 @@ class productoController
 
 
 
-
 	public function ver()
 	{
 		if (isset($_GET['id'])) {
