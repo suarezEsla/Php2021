@@ -114,10 +114,11 @@ public function obtenerOfertas(){
 		$idProducto = $this->id;
 		$totaLVentas = $this->db->prepare("SELECT sum(unidades) as 'total' FROM lineas_pedidos WHERE producto_id =?");
 		
+		
 
 		$totaLVentas->bind_param("i",$idProducto);
 		$totaLVentas->execute();
-
+	
 		$total = $totaLVentas->get_result()->fetch_array()[0];
 
 		
@@ -127,15 +128,32 @@ public function obtenerOfertas(){
 
 //Función para sacar el producto más vendido
 	public function obtenerMasVendido(){
+		$idProducto = $this->id;
+		$masVendido = $this->db->prepare("SELECT max(l.producto_id), p.nombre  FROM lineas_pedidos l join productos p where l.producto_id=? LIMIT 1");
 		
-		$masVendido = "SELECT max(l.producto_id), p.nombre FROM lineas_pedidos l join productos p where l.producto_id=p.id";
-		
+		$masVendido->bind_param("i",$idProducto);
+		$masVendido->execute();
+
 		
 
-		$productos = $this->db->query($masVendido);
-		return $productos;
+		$total = $masVendido->get_result()->fetch_array()[0];
+		return $total;
 	}
- 
+
+	//Función para sacar el dinero total generado por un producto
+
+	public function obtenerTotalGenerado(){
+		$stm = $this->db->prepare("select sum(pe.coste) from pedidos pe join lineas_pedidos l on pe.id=l.pedido_id join productos p on p.id=l.producto_id where l.producto_id=?");
+		if(!$stm)return false;
+		$stm->bind_param("i",$this->id);
+		$stm->execute();
+		$result = $stm->get_result();
+		$result = $result->fetch_array(MYSQLI_NUM)[0];
+		return number_format($result,2,",");
+	}
+
+
+	
 
 
 	

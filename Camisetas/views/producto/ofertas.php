@@ -3,7 +3,7 @@
 require_once './vendor/autoload.php';
 
 //Conexión a bd
-$conexion = new mysqli('localhost','root','','tienda_master');
+$conexion = new mysqli('localhost', 'root', '', 'tienda_master');
 //Consulta
 $consulta = $conexion->query("Select * from productos");
 
@@ -21,7 +21,7 @@ $pagination->records_per_page($numero_elementos_pagina);
 
 $page = $pagination->get_page();
 
-$empieza_aqui = (($page -1) * $numero_elementos_pagina);
+$empieza_aqui = (($page - 1) * $numero_elementos_pagina);
 
 
 $sql = "Select * from productos LIMIT $empieza_aqui, $numero_elementos_pagina";

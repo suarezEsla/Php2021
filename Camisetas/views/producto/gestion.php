@@ -26,9 +26,10 @@
 		<th>STOCK</th>
 		<th>TOTAL VENDIDO</th>
 		<th>MAS VENDIDO</th>
+		<th>TOTAL GENERADO</th>
 		<th>ACCIONES</th>
 	</tr>
-	<h3>Producto más vendido</h3>
+	
 	<?php while($pro = $productos->fetch_object("Producto")): ?>
 		
 		<tr>
@@ -37,9 +38,8 @@
 			<td><?=$pro->precio;?></td>
 			<td><?=$pro->stock;?></td>
 			<td><?=$pro->obtenerTotalProductosVendidos();?></td><!--Producto.php-->
-			<td><?php  $pro->obtenerMasVendido(); ?></td>
-			
-			
+			<td><?=$pro->obtenerMasVendido();?></td>
+			<td><?=$pro->obtenerTotalGenerado()." €";?></td>
 			<td>
 				<!--Botones editar y eliminar llevan a ProductoController-->
 				<a href="<?=base_url?>producto/editar&id=<?=$pro->id?>" class="button button-gestion">Editar</a>
@@ -47,7 +47,9 @@
 			</td>
 		</tr>
 		
+		
 		<?php endwhile; ?>
+		
 </table>
 
 

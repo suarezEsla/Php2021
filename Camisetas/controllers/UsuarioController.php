@@ -261,6 +261,9 @@ public function gestion()
 		$usuario = new Usuario();
 		$usuarios = $usuario->getAll();
 
+		$pedido = new Pedido();
+		$pedidos = $pedido->getAll();
+
 		require_once 'views/usuario/gestion.php';
 	}
 
