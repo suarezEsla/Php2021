@@ -62,6 +62,9 @@
 		<?php endwhile; ?>
 	</table>
 	<a href="<?= base_url ?>pedido/crearPdf">Generar Factura</a>
+
+
+
 <?php endif; ?>
 
 

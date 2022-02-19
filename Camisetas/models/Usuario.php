@@ -1,21 +1,27 @@
 <?php
 
 class Usuario{
-	private $id;
-	private $nombre;
-	private $apellidos;
-	private $email;
+	public $id;
+	public $nombre;
+	public $apellidos;
+	public $email;
 	private $password;
 	private $rol;
 	private $imagen;
+	private $direccion;
 	private $db;
 	
 	public function __construct() {
 		$this->db = Database::connect();
 	}
 	
+	
 	function getId() {
 		return $this->id;
+	}
+	
+	function getDireccion(){
+		return $this->direccion;
 	}
 
 	function getNombre() {
@@ -61,6 +67,9 @@ class Usuario{
 	function setPassword($password) {
 		$this->password = $password;
 	}
+	function  setDireccion(){
+		$this->direccion = $direccion;
+	}
 
 	function setRol($rol) {
 		$this->rol = $rol;
@@ -70,8 +79,37 @@ class Usuario{
 		$this->imagen = $imagen;
 	}
 
+
+	public function consultaDireccion($usuario){
+		$direccionSeleccionada = $this->db->query("SELECT direccion_habitual FROM usuarios where id=$usuario");
+		
+	
+		return $direccionSeleccionada->fetch_object();
+	}
+	
+
+
+public function importeTotal(){
+	$idUsuario = $this->id;
+	$totalVendido = $this->db->prepare("select sum(pe.coste) from pedidos pe join usuarios u on pe.usuario_id=?");
+	
+	
+
+	$totalVendido->bind_param("i",$idUsuario);
+	$totalVendido->execute();
+
+	$total = $totalVendido->get_result()->fetch_array()[0];
+
+	
+	return $total;
+	
+}
+
+
 	public function save(){
-		$sql = "INSERT INTO usuarios VALUES(NULL, '{$this->getNombre()}', '{$this->getApellidos()}', '{$this->getEmail()}', '{$this->getPassword()}', 'user', null); ";
+		$sql = "INSERT INTO usuarios VALUES(NULL, '{$this->getNombre()}', '{$this->getApellidos()}', '{$this->getEmail()}', '{$this->getDireccion()}', '{$this->getPassword()}', 'user', null); ";
+/* var_dump($sql); die(); */
+
 		$save = $this->db->query($sql);
 		
 		$result = false;
@@ -129,10 +167,10 @@ class Usuario{
 
 	//Esla
 	public function edit(){
-	$sql = "UPDATE usuarios SET nombre='{$this->getNombre()}', apellidos='{$this->getApellidos()}', email='{$this->getEmail()}' , password='{$this->getPassword()}', rol='user', imagen=NULL WHERE id='{$this->id}'"; 
+	$sql = "UPDATE usuarios SET nombre='{$this->getNombre()}', apellidos='{$this->getApellidos()}', email='{$this->getEmail()}' , direccion='{$this->getDireccion()}', password='{$this->getPassword()}', rol='user', imagen=NULL WHERE id='{$this->id}'"; 
 		/* var_dump($sql);
-		die;
-		 */
+		die; */
+		
 		/* $sql .= " WHERE id='{$this->id}';"; */
 		
 		$save = $this->db->query($sql);

@@ -26,13 +26,15 @@ class usuarioController
 			$nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
 			$apellidos = isset($_POST['apellidos']) ? $_POST['apellidos'] : false;
 			$email = isset($_POST['email']) ? $_POST['email'] : false;
+			$direccion = isset($_POST['direccion']) ? $_POST['direccion'] : false;
 			/* $password = isset($_POST['password']) ? $_POST['password'] : false; */
 
-			if ($nombre && $apellidos && $email) {
+			if ($nombre && $apellidos && $email && $direccion) {
 				$usuario = new Usuario();
 				$usuario->setNombre($nombre);
 				$usuario->setApellidos($apellidos);
 				$usuario->setEmail($email);
+				$usuario->setDireccion($direccion);
 
 				if (isset($_GET['id'])) {
 					$id = $_GET['id'];
@@ -65,6 +67,7 @@ class usuarioController
 			$apellidos = isset($_POST['apellidos']) ? $_POST['apellidos'] : false;
 			$email = isset($_POST['email']) ? $_POST['email'] : false;
 			$password = isset($_POST['password']) ? $_POST['password'] : false;
+			$direccion = isset($_POST['direccion']) ? $_POST['direccion'] : false;
 
 			if ($nombre && $apellidos && $email) {
 				$usuario = new Usuario();
@@ -72,6 +75,7 @@ class usuarioController
 				$usuario->setApellidos($apellidos);
 				$usuario->setEmail($email);
 				$usuario->setPassword($password);
+				$usuario->setDireccion($direccion);
 
 				if (isset($_GET['id'])) {
 					$id = $_GET['id'];

@@ -8,13 +8,13 @@
 	<tr>
 		<th>ID</th>
 		<th>NOMBRE</th>
-		<th>DINERO GENERADO POR CATEGORÍA</th>
+		
 	</tr>
 	<?php while($cat = $categorias->fetch_object()): ?>
 		<tr>
 			<td><?=$cat->id;?></td>
 			<td><?=$cat->nombre;?></td>
-			<td><?= $cat->generadoPorCategoria()?></td>
+			
 		</tr>
 	<?php endwhile; ?>
 </table>

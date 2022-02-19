@@ -1,4 +1,9 @@
 <?php
+require_once ('dompdf/autoload.inc.php');
+use Dompdf\Dompdf;
+
+	
+	
 
 class Pedido{
 	private $id;
@@ -10,6 +15,8 @@ class Pedido{
 	private $estado;
 	private $fecha;
 	private $hora;
+	
+
 
 	private $db;
 	
@@ -17,6 +24,9 @@ class Pedido{
 		$this->db = Database::connect();
 	}
 	
+
+
+
 	function getId() {
 		return $this->id;
 	}
@@ -88,6 +98,12 @@ class Pedido{
 	function setHora($hora) {
 		$this->hora = $hora;
 	}
+
+
+
+
+
+
 
 	public function getAll(){
 		$productos = $this->db->query("SELECT * FROM pedidos ORDER BY id DESC");
@@ -189,4 +205,33 @@ class Pedido{
 		}
 		return $result;
 	}
-}
+	
+
+	public function sacarPdf($id){
+	
+		
+		
+	/* 	require_once "dompdf_config.inc.php"; */
+$file = base_url.'pedido/detalle'; 
+$html=file_get_contents($file);
+$dompdf = new DOMPDF();
+$dompdf->load_html($html);
+$dompdf->render();
+$dompdf->stream("factura.pdf");
+
+			
+				
+			
+			
+		}
+
+
+
+
+	}
+
+
+
+
+
+

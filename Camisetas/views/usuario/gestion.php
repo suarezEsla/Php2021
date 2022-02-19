@@ -34,14 +34,18 @@
 		<th>NOMBRE</th>
 		<th>APELLIDOS</th>
 		<th>e-mail</th>
+		<th>Dirección</th>
+		<th>Importe total de pedidos</th>
 	</tr>
 	
-	<?php while($usuario = $usuarios->fetch_object()): ?>
+	<?php while($usuario = $usuarios->fetch_object("Usuario")): ?>
 		<tr>
 			<td><?=$usuario->id;?></td>
 			<td><?=$usuario->nombre;?></td>
 			<td><?=$usuario->apellidos;?></td>
 			<td><?=$usuario->email;?></td>
+			<td><?=$usuario->direccion?></td>
+			<td><?=$usuario->importeTotal()." €"?></td>
 			<td>
 
 			<!--LLama a la funcion edit de UsuarioController/editar()-->

@@ -22,6 +22,9 @@
 		<label for="email">e-mail</label>
 		<input type="text" name="email" value="<?= isset($usuario) && is_object($usuario) ? $usuario->email : ''; ?>" />
 
+		<label for="direccion">Dirección</label>
+		<input type="text" name="direccion" value="<?= isset($usuario) && is_object($usuario) ? $usuario->direccion : ''; ?>" />
+
 		<!-- El campo password se muestra sólo si es creación de usuario nuevo-->
 		<?php if ($nuevo) : ?>
 			<label for="password">Contraseña</label>
