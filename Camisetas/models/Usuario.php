@@ -8,7 +8,7 @@ class Usuario{
 	private $password;
 	private $rol;
 	private $imagen;
-	private $direccion;
+	public $direccion;
 	private $db;
 	
 	public function __construct() {
@@ -67,7 +67,7 @@ class Usuario{
 	function setPassword($password) {
 		$this->password = $password;
 	}
-	function  setDireccion(){
+	function  setDireccion($direccion){
 		$this->direccion = $direccion;
 	}
 
@@ -80,12 +80,12 @@ class Usuario{
 	}
 
 
-	public function consultaDireccion($usuario){
+	/* public function consultaDireccion($usuario){
 		$direccionSeleccionada = $this->db->query("SELECT direccion_habitual FROM usuarios where id=$usuario");
 		
 	
 		return $direccionSeleccionada->fetch_object();
-	}
+	} */
 	
 
 
@@ -273,6 +273,8 @@ public function importeTotal(){
 		$usuario = $this->db->query("SELECT * FROM usuarios WHERE id = $userId");
 
 		$usuario = $usuario->fetch_object("Usuario");
+
+
 
 		if ($usuario == null){
 

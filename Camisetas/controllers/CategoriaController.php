@@ -56,7 +56,7 @@ class categoriaController
 		require_once 'views/categoria/crear.php';
 	}
 
-	public function save()
+	/* public function save()
 	{
 		Utils::isAdmin();
 		if (isset($_POST) && isset($_POST['nombre'])) {
@@ -66,5 +66,94 @@ class categoriaController
 			$save = $categoria->save();
 		}
 		header("Location:" . base_url . "categoria/index");
+	} */
+
+
+	public function editar()
+	{
+		Utils::isAdmin();
+		if (isset($_GET['id'])) {
+			$id = $_GET['id'];
+			$edit = true;
+
+			$categoria = new Categoria();
+			$categoria->setId($id);
+
+			$categoria = $categoria->getOne();
+
+			require_once 'views/categoria/editarCategoria.php';
+		} else {
+			header('Location:' . base_url . 'Categoria/index.php');
+		}
 	}
+
+
+
+
+	public function save()
+	{
+		Utils::isAdmin();
+		if (isset($_POST)) {
+			$nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
+			
+			
+			// $imagen = isset($_POST['imagen']) ? $_POST['imagen'] : false;
+
+			if ($nombre ) {
+				$categoria = new Categoria();
+				$categoria->setNombre($nombre);
+				
+				
+				
+
+				if (isset($_GET['id'])) {
+					$id = $_GET['id'];
+					$categoria->setId($id);
+
+					$save = $categoria->edit();
+					var_dump($save); die();
+				} else {
+					$save = $categoria->save();
+				}
+
+				if ($save) {
+					$_SESSION['categoria'] = "complete";
+				} else {
+					$_SESSION['categoria'] = "failed";
+				}
+			} else {
+				$_SESSION['categoria'] = "failed";
+			}
+		} else {
+			$_SESSION['categoria'] = "failed";
+		}
+		header('Location:' . base_url . 'categoria/index');
+	}
+
+
+	public function eliminar()
+	{
+		Utils::isAdmin();
+
+		if (isset($_GET['id'])) {
+			$id = $_GET['id'];
+			$categoria = new Categoria();
+			$categoria->setId($id);
+
+			$delete = $categoria->delete();
+			if ($delete) {
+				
+				$_SESSION['delete'] = 'complete';
+			} else {
+				$_SESSION['delete'] = 'failed';
+			}
+		} else {
+			echo "<p>No se puede eliminar la categoría</p>";
+			$_SESSION['delete'] = 'failed';
+		}
+
+		header('Location:' . base_url . 'producto/index');
+	}
+
+	
 }
